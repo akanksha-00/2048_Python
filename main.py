@@ -89,14 +89,37 @@ def draw(window, tiles):
         tile.draw(window)
 
     draw_grid(window)
-    pygame.display.update()
+    pygame.display.update()   
+
+
+def generate_random_tile(tiles):
+    row = None
+    column = None
+
+    while True:
+        row = random.randrange(0, ROWS)
+        column = random.randrange(0, COLUMNS)
+        if f"{row}{column}" not in tiles:
+            break
+
+    return row, column
+
+
+def generate_tiles():
+    tiles = {}
+
+    for _ in range(2):
+        row, column = generate_random_tile(tiles)
+        tiles[f"{row}{column}"] = Tile(2, row, column)
+        
+    return tiles
 
 
 def main(window):
     clock = pygame.time.Clock()
     run = True
 
-    tiles = {}
+    tiles = generate_tiles()
 
     while run:
         clock.tick(FPS)
